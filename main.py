@@ -22,10 +22,12 @@ square_size = width // columns
 line_colour = (82, 82, 75)
 line_width = 15
 
-x_colour = (255, 32, 143)
+offset = 50
 
+x_colour = (0, 210, 210)
+x_width = 20
 
-o_colour = (0, 210, 210)
+o_colour = (255, 32, 143)
 o_width = 15
 radius = square_size // 4
 
@@ -76,8 +78,21 @@ class Game:
 
     def draw_figure(self, row, column):
         if self.player == 1:
-            pass
+            #################
+            #   Drawing X   #
+            #################
+            # Descending Part #
+            start_descend = (column * square_size + offset, row * square_size + offset)
+            end_descend = (column * square_size + square_size - offset, row * square_size + square_size - offset)
+            pygame.draw.line(screen, x_colour, start_descend, end_descend, x_width)
+            # Ascending Part #
+            start_ascend = (column * square_size + offset, row * square_size + square_size - offset)
+            end_ascend = (column * square_size + square_size - offset, row * square_size + offset)
+            pygame.draw.line(screen, x_colour, start_ascend, end_ascend, x_width)
         elif self.player == 2:
+            #################
+            #   Drawing O   #
+            #################
             center = (column * square_size + square_size // 2, row * square_size + square_size // 2)
             pygame.draw.circle(screen, o_colour, center, radius, o_width)
 
