@@ -31,7 +31,6 @@ o_colour = (255, 32, 143)
 o_width = 15
 radius = square_size // 4
 
-
                             # *.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.#
                             #                                                   #
                             #               SETTING UP THE GAME                 #
@@ -98,8 +97,6 @@ class Game:
 
     def next_turn(self):
         self.player = self.player % 2 + 1  # changes player, value between 1 and
-
-
 
                             # *.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.#
                             #                                                   #
