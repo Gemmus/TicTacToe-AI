@@ -123,7 +123,8 @@ class AI:
         self.level = level
         self.player = player
 
-    def random(self, board):
+    @staticmethod
+    def random(board):
         empty_squares = board.get_empty_squares()
         indexes = random.randrange(0, len(empty_squares))
         return empty_squares[indexes]  # (row, column)
@@ -179,13 +180,12 @@ class AI:
             #####################
             #   Random Choice   #
             #####################
-            evaluation = "random"
             move = self.random(main_board)
         else:
             ################################
             #   Minimax Algorithm Choice   #
             ################################
-            evaluation, move = self.minimax(main_board, False)
+            move = self.minimax(main_board, False)[1]
 
         return move  # row, column
 
@@ -199,7 +199,8 @@ class Game:
         self.running = True
         self.show_lines()
 
-    def show_lines(self):
+    @staticmethod
+    def show_lines():
         screen.fill(background_colour)
         # Vertical lines
         pygame.draw.line(screen, line_colour, (square_size, 0), (square_size, height), line_width)
