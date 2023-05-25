@@ -50,6 +50,9 @@ class Board:
     def marking_square(self, row, column, player):
         self.squares[row][column] = player
 
+    def empty_square(self, row, column):
+        return self.squares[row][column] == 0
+
 
 class Game:
     def __init__(self):
@@ -74,8 +77,12 @@ class Game:
 
 def main():
 
-    Game()
+    game = Game()
+    board = game.board
 
+    #################
+    #   Main Loop   #
+    #################
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -86,6 +93,10 @@ def main():
                 row = pos[1] // square_size
                 column = pos[0] // square_size
                 print(row, column)
+
+                if board.empty_square(row, column):
+                    board.marking_square(row, column, 1)
+                    print(board.squares)
 
         pygame.display.update()
 
