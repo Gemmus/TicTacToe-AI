@@ -13,6 +13,8 @@ import copy
 width = 600
 height = 600
 background_colour = (247, 243, 234)
+x_colour = (255, 32, 143)
+o_colour = (0, 210, 210)
 
 rows = 3
 columns = 3
