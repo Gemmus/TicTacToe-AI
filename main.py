@@ -68,6 +68,9 @@ class Game:
         pygame.draw.line(screen, line_colour, (0, square_size), (width, square_size), line_width)
         pygame.draw.line(screen, line_colour, (0, height - square_size), (width, height - square_size), line_width)
 
+    def next_turn(self):
+        self.player = self.player % 2 + 1  # changes player, value between 1 and 2
+
                             # *.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.#
                             #                                                   #
                             #                   MAIN PROGRAMME                  #
@@ -95,7 +98,9 @@ def main():
                 print(row, column)
 
                 if board.empty_square(row, column):
-                    board.marking_square(row, column, 1)
+                    board.marking_square(row, column, game.player)
+                    print(board.squares)
+                    game.next_turn()
                     print(board.squares)
 
         pygame.display.update()
