@@ -53,7 +53,6 @@ pygame.display.set_caption("TIC TAC TOE")
 class Board:
     def __init__(self):
         self.squares = np.zeros((rows, columns))
-        print(self.squares)
         self.empty_slots = self.squares
         self.marked_slots = 0
 
@@ -187,8 +186,6 @@ class AI:
             #   Minimax Algorithm Choice   #
             ################################
             evaluation, move = self.minimax(main_board, False)
-
-        print(f'AI has chosen to mark the square in position {move} with an evaluation of {evaluation}.')
 
         return move  # row, column
 
