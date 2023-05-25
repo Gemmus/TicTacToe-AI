@@ -56,6 +56,26 @@ class Board:
         self.empty_slots = self.squares
         self.marked_slots = 0
 
+    def final_state(self):
+        # return 0: no one wins; return 1: player1 wins; return 2: player2 wins
+        # Horizontal lines #
+        for i in range(rows):
+            if self.squares[i][0] == self.squares[i][1] == self.squares[i][2] != 0:
+                return self.squares[i][0]
+
+        # Vertical lines #
+        for j in range(columns):
+            if self.squares[0][j] == self.squares[1][j] == self.squares[2][j] != 0:
+                return self.squares[0][j]
+
+        # Diagonal lines #
+        if self.squares[0][0] == self.squares[1][1] == self.squares[2][2] != 0:
+            return self.squares[1][1]
+        if self.squares[0][2] == self.squares[1][1] == self.squares[2][0] != 0:
+            return self.squares[1][1]
+
+        return 0  # no winner yet
+
     def marking_square(self, row, column, player):
         self.squares[row][column] = player
         self.marked_slots += 1
