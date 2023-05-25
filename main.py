@@ -13,8 +13,6 @@ import copy
 width = 600
 height = 600
 background_colour = (247, 243, 234)
-x_colour = (255, 32, 143)
-o_colour = (0, 210, 210)
 
 rows = 3
 columns = 3
@@ -23,6 +21,14 @@ square_size = width // columns
 
 line_colour = (82, 82, 75)
 line_width = 15
+
+x_colour = (255, 32, 143)
+
+
+o_colour = (0, 210, 210)
+o_width = 15
+radius = square_size // 4
+
 
                             # *.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.#
                             #                                                   #
@@ -57,7 +63,7 @@ class Board:
 class Game:
     def __init__(self):
         self.board = Board()
-        self.player = 1
+        self.player = 1  # 1 = X, 2 = O
         self.show_lines()
 
     def show_lines(self):
@@ -68,8 +74,17 @@ class Game:
         pygame.draw.line(screen, line_colour, (0, square_size), (width, square_size), line_width)
         pygame.draw.line(screen, line_colour, (0, height - square_size), (width, height - square_size), line_width)
 
+    def draw_figure(self, row, column):
+        if self.player == 1:
+            pass
+        elif self.player == 2:
+            center = (column * square_size + square_size // 2, row * square_size + square_size // 2)
+            pygame.draw.circle(screen, o_colour, center, radius, o_width)
+
     def next_turn(self):
-        self.player = self.player % 2 + 1  # changes player, value between 1 and 2
+        self.player = self.player % 2 + 1  # changes player, value between 1 and
+
+
 
                             # *.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.#
                             #                                                   #
@@ -87,10 +102,13 @@ def main():
     #   Main Loop   #
     #################
     while True:
+
         for event in pygame.event.get():
+
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
+
             if event.type == pygame.MOUSEBUTTONDOWN:
                 pos = event.pos
                 row = pos[1] // square_size
@@ -100,6 +118,7 @@ def main():
                 if board.empty_square(row, column):
                     board.marking_square(row, column, game.player)
                     print(board.squares)
+                    game.draw_figure(row, column)
                     game.next_turn()
                     print(board.squares)
 
