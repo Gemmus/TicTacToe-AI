@@ -31,6 +31,8 @@ o_colour = (255, 32, 143)
 o_width = 15
 radius = square_size // 4
 
+win_color = (248, 254, 18)
+
                             # *.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.#
                             #                                                   #
                             #               SETTING UP THE GAME                 #
@@ -55,22 +57,42 @@ class Board:
         self.empty_slots = self.squares
         self.marked_slots = 0
 
-    def final_state(self):
+    def final_state(self, show=False):
         # return 0: no one wins; return 1: player1 wins; return 2: player2 wins
         # Horizontal lines #
         for i in range(rows):
             if self.squares[i][0] == self.squares[i][1] == self.squares[i][2] != 0:
+                if show:
+                    # win_color = o_colour if self.squares[i][0] == 2 else x_colour
+                    initial_position = (20, i * square_size + square_size // 2)
+                    final_position = (width - 20, i * square_size + square_size // 2)
+                    pygame.draw.line(screen, win_color, initial_position, final_position, line_width)
                 return self.squares[i][0]
 
         # Vertical lines #
         for j in range(columns):
             if self.squares[0][j] == self.squares[1][j] == self.squares[2][j] != 0:
+                if show:
+                    # win_color = o_colour if self.squares[0][j] == 2 else x_colour
+                    initial_position = (j * square_size + square_size // 2, 20)
+                    final_position = (j * square_size + square_size // 2, height - offset)
+                    pygame.draw.line(screen, win_color, initial_position, final_position, line_width)
                 return self.squares[0][j]
 
         # Diagonal lines #
         if self.squares[0][0] == self.squares[1][1] == self.squares[2][2] != 0:
+            if show:
+                # win_color = o_colour if self.squares[1][1] == 2 else x_colour
+                initial_position = (20, 20)
+                final_position = (width - 20, height - 20)
+                pygame.draw.line(screen, win_color, initial_position, final_position, x_width)
             return self.squares[1][1]
         if self.squares[0][2] == self.squares[1][1] == self.squares[2][0] != 0:
+            if show:
+                # win_color = o_colour if self.squares[1][1] == 2 else x_colour
+                initial_position = (20, height - 20)
+                final_position = (width - 20, 20)
+                pygame.draw.line(screen, win_color, initial_position, final_position, x_width)
             return self.squares[1][1]
 
         return 0  # no winner yet
@@ -224,7 +246,7 @@ class Game:
         self.__init__()
 
     def game_over(self):
-        return self.board.final_state() != 0 or self.board.checking_full()
+        return self.board.final_state(show=True) != 0 or self.board.checking_full()
 
                             # *.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.#
                             #                                                   #
