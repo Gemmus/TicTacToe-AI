@@ -53,12 +53,29 @@ class Board:
     def __init__(self):
         self.squares = np.zeros((rows, columns))
         print(self.squares)
+        self.empty_slots = self.squares
+        self.marked_slots = 0
 
     def marking_square(self, row, column, player):
         self.squares[row][column] = player
+        self.marked_slots += 1
 
     def empty_square(self, row, column):
         return self.squares[row][column] == 0
+
+    def get_empty_squares(self):
+        empty_square_list = []
+        for i in range(rows):
+            for j in range(columns):
+                if self.empty_square(i, j):
+                    empty_square_list.append((i, j))
+        return empty_square_list
+
+    def checking_full(self):
+        return self.marked_slots == 9
+
+    def checking_empty(self):
+        return self.marked_slots == 0
 
 
 class Game:
