@@ -98,10 +98,37 @@ class Board:
         return self.marked_slots == 0
 
 
+class AI:
+    def __init__(self, level=0, player=2):
+        self.level = level
+        self.player = player
+
+    def random(self, board):
+        empty_squares = board.get_empty_squares()
+        indexes = random.randrange(0, len(empty_squares))
+        return empty_squares[indexes]  # (row, column)
+
+    def eval(self, main_board):
+        if self.level == 0:
+            #####################
+            #   Random Choice   #
+            #####################
+            move = self.random(main_board)
+        else:
+            ################################
+            #   Minimax Algorithm Choice   #
+            ################################
+            pass
+        return move # row, column
+
+
 class Game:
     def __init__(self):
         self.board = Board()
+        self.ai = AI()
         self.player = 1  # 1 = X, 2 = O
+        self.game_mode = 'ai'  # 'pvp' or 'ai'
+        self.running = True
         self.show_lines()
 
     def show_lines(self):
@@ -146,6 +173,7 @@ def main():
 
     game = Game()
     board = game.board
+    ai = game.ai
 
     #################
     #   Main Loop   #
@@ -170,6 +198,17 @@ def main():
                     game.draw_figure(row, column)
                     game.next_turn()
                     print(board.squares)
+
+        if game.game_mode == 'ai' and game.player == ai.player:
+            pygame.display.update()
+
+            row, column = ai.eval(board)
+
+            board.marking_square(row, column, game.player)
+            print(board.squares)
+            game.draw_figure(row, column)
+            game.next_turn()
+            print(board.squares)
 
         pygame.display.update()
 
